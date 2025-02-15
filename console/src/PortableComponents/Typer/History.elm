@@ -10,23 +10,13 @@ type History
         }
 
 
-hisRec : Maybe String -> Maybe String -> Maybe String -> History
-hisRec lt t nt =
-    case t of
-        Nothing ->
-            Empty
-
-        Just txt ->
-            Roll
-                { text = txt
-                , back = \_ -> hisRec Nothing lt t
-                , next = \_ -> hisRec t nt Nothing
-                }
-
-
 hisInit : String -> History
 hisInit str =
-    hisRec Nothing (Just str) Nothing
+    Roll
+        { text = str
+        , back = \_ -> Empty
+        , next = \_ -> Empty
+        }
 
 
 hisMake : String -> { text : String, back : () -> History, next : () -> History } -> History
